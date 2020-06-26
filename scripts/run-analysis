@@ -1,3 +1,40 @@
 #!/bin/sh
+cd /home/dotnet/project
 
-echo 'hello'
+echo 'Ensure directory clean for analysis'
+rm -rf bin
+rm -rf obj
+rm -rf .sonarqube
+
+echo 'Starting SonarCloud analysis'
+# check if PR or main build
+if [[ -z "${SONAR_PR_KEY}" ]]; then
+  dotnet sonarscanner begin \
+  /k:${SONAR_PROJECT_KEY} \
+  /o:${SONAR_ORGANIZAION_KEY} \
+  /d:sonar.host.url=${SONAR_HOST_URL} \
+  /d:sonar.login=${SONAR_TOKEN} \
+  /d:sonar.cs.exclusions="**/*.Tests/**,**/bin/**,**/obj/**" \
+  /d:sonar.cs.lcov.reportPaths="test-output/lcov.info" \
+  /d:sonar.exclusions="**/*.Tests/**,**/bin/**,**/obj/**,snyk_report.html,workspace_snyk_report.html"
+else
+  dotnet sonarscanner begin \
+  /k:${SONAR_PROJECT_KEY} \
+  /o:${SONAR_ORGANIZAION_KEY} \
+  /d:sonar.host.url=${SONAR_HOST_URL} \
+  /d:sonar.login=${SONAR_TOKEN} \
+  /d:sonar.pullrequest.base=${SONAR_PR_BASE} \
+  /d:sonar.pullrequest.branch=${SONAR_PR_BRANCH} \
+  /d:sonar.pullrequest.key=${SONAR_PR_KEY} \
+  /d:sonar.pullrequest.provider=${SONAR_PR_PROVIDER} \
+  /d:sonar.pullrequest.github.repository=${SONAR_PR_REPOSITORY} \
+  /d:sonar.cs.exclusions="**/*.Tests/**,**/bin/**,**/obj/**" \
+  /d:sonar.cs.lcov.reportPaths="test-output/lcov.info" \
+  /d:sonar.exclusions="**/*.Tests/**,**/bin/**,**/obj/**,snyk_report.html,workspace_snyk_report.html"
+fi
+
+echo 'Build .Net Core solution'
+dotnet build
+
+echo 'Complete SonarCloud analysis'
+dotnet sonarscanner end /d:sonar.login=${SONAR_TOKEN}
