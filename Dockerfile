@@ -12,6 +12,7 @@ RUN dotnet tool install --global coverlet.console
 ENV PATH="$PATH:/root/.dotnet/tools"
 USER dotnet
 
+RUN mkdir -p /home/dotnet/project/
 COPY --chown=dotnet:dotnet ./scripts .
 
 ENTRYPOINT [ "./run-analysis" ] 
