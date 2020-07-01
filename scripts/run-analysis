@@ -1,5 +1,4 @@
 #!/bin/sh
-cd /home/dotnet/project
 
 echo 'Ensure directory clean for analysis'
 rm -rf bin
@@ -34,7 +33,7 @@ else
 fi
 
 echo 'Build .Net Core solution'
-dotnet build
+dotnet build /home/dotnet/project
 
 echo 'Complete SonarCloud analysis'
 dotnet sonarscanner end /d:sonar.login=${SONAR_TOKEN}
