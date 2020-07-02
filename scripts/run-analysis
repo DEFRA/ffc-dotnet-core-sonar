@@ -1,15 +1,15 @@
 #!/bin/sh
-echo 'Set variables'
+echo '## Set variables ##'
 EXCLUSIONS="**/*.Tests/**,**/bin/**,**/obj/**,**/snyk_report.html,**/workspace_snyk_report.html"
 REPORT_PATH="/home/dotnet/working/project/test-output/coverage.opencover.xml"
 
-echo 'Ensure directory clean for analysis'
+echo '## Ensure directory clean for analysis ##'
 rm -rf home/dotnet/working
 
-echo 'Copy project to working folder'
+echo '## Copy project to working folder ##'
 cp -r /home/dotnet/project /home/dotnet/working
 
-echo 'Starting SonarCloud analysis'
+echo '## Starting SonarCloud analysis ##'
 # check if PR or main build
 if [[ -z "${SONAR_PR_KEY}" ]]; then
   dotnet sonarscanner begin \
@@ -18,7 +18,7 @@ if [[ -z "${SONAR_PR_KEY}" ]]; then
   /d:sonar.host.url=${SONAR_HOST_URL} \
   /d:sonar.login=${SONAR_TOKEN} \
   /d:sonar.cs.exclusions=$EXCLUSIONS \
-  /d:sonar.cs.opencover.reportPaths=$REPORT_PATH \
+  /d:sonar.cs.opencover.reportsPaths=$REPORT_PATH \
   /d:sonar.exclusions=$EXCLUSIONS
 else
   dotnet sonarscanner begin \
@@ -32,12 +32,12 @@ else
   /d:sonar.pullrequest.provider=${SONAR_PR_PROVIDER} \
   /d:sonar.pullrequest.github.repository=${SONAR_PR_REPOSITORY} \
   /d:sonar.cs.exclusions=$EXCLUSIONS \
-  /d:sonar.cs.opencover.reportPaths=$REPORT_PATH \
+  /d:sonar.cs.opencover.reportsPaths=$REPORT_PATH \
   /d:sonar.exclusions=$EXCLUSIONS
 fi
 
-echo 'Build .Net Core solution'
+echo '## Build .Net Core solution ##'
 dotnet build /home/dotnet/working/project
 
-echo 'Complete SonarCloud analysis'
+echo '## Complete SonarCloud analysis ##'
 dotnet sonarscanner end /d:sonar.login=${SONAR_TOKEN}
