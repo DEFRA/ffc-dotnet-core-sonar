@@ -1,4 +1,7 @@
 #!/bin/sh
+echo 'Set variables'
+EXCLUSIONS="**/*.Tests/**,**/bin/**,**/obj/**,**/snyk_report.html,**/workspace_snyk_report.html"
+REPORT_PATH="/home/dotnet/working/project/test-output/coverage.opencover.xml"
 
 echo 'Ensure directory clean for analysis'
 rm -rf home/dotnet/working
@@ -14,9 +17,9 @@ if [[ -z "${SONAR_PR_KEY}" ]]; then
   /o:${SONAR_ORGANIZAION_KEY} \
   /d:sonar.host.url=${SONAR_HOST_URL} \
   /d:sonar.login=${SONAR_TOKEN} \
-  /d:sonar.cs.exclusions="**/*.Tests/**,**/bin/**,**/obj/**" \
-  /d:sonar.cs.lcov.reportPaths="test-output/lcov.info" \
-  /d:sonar.exclusions="**/*.Tests/**,**/bin/**,**/obj/**,snyk_report.html,workspace_snyk_report.html"
+  /d:sonar.cs.exclusions=$EXCLUSIONS \
+  /d:sonar.cs.opencover.reportPaths=$REPORT_PATH \
+  /d:sonar.exclusions=$EXCLUSIONS
 else
   dotnet sonarscanner begin \
   /k:${SONAR_PROJECT_KEY} \
@@ -28,9 +31,9 @@ else
   /d:sonar.pullrequest.key=${SONAR_PR_KEY} \
   /d:sonar.pullrequest.provider=${SONAR_PR_PROVIDER} \
   /d:sonar.pullrequest.github.repository=${SONAR_PR_REPOSITORY} \
-  /d:sonar.cs.exclusions="**/*.Tests/**,**/bin/**,**/obj/**" \
-  /d:sonar.cs.lcov.reportPaths="test-output/lcov.info" \
-  /d:sonar.exclusions="**/*.Tests/**,**/bin/**,**/obj/**,snyk_report.html,workspace_snyk_report.html"
+  /d:sonar.cs.exclusions=$EXCLUSIONS \
+  /d:sonar.cs.opencover.reportPaths=$REPORT_PATH \
+  /d:sonar.exclusions=$EXCLUSIONS
 fi
 
 echo 'Build .Net Core solution'
