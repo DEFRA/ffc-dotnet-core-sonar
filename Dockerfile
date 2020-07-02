@@ -19,6 +19,7 @@ ENV SONAR_PR_PROVIDER=GitHub
 LABEL uk.gov.defra.ffc.parent-image=defradigital/dotnetcore-development:${PARENT_VERSION}
 
 COPY --chown=dotnet:dotnet ./scripts .
-RUN mkdir -p /home/dotnet/project/
+RUN install -d -o dotnet -g dotnet /home/dotnet/project/
+RUN install -d -o dotnet -g dotnet /home/dotnet/working/
 
 ENTRYPOINT [ "./run-analysis" ] 
