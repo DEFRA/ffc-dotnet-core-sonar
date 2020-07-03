@@ -1,13 +1,22 @@
 #!/bin/sh
 echo '## Set variables ##'
-EXCLUSIONS="**/*.Tests/**,**/bin/**,**/obj/**,**/snyk_report.html,**/workspace_snyk_report.html"
+EXCLUSIONS="**/*.Tests/*,**/bin/*,**/obj/*,**/snyk_report.html,**/workspace_snyk_report.html"
 REPORT_PATH="/home/dotnet/working/project/test-output/coverage.opencover.xml"
+SOURCE="/home/dotnet/working/project"
 
 echo '## Ensure directory clean for analysis ##'
-rm -rf home/dotnet/working
+rm -r /home/dotnet/working/*
 
 echo '## Copy project to working folder ##'
 cp -r /home/dotnet/project /home/dotnet/working
+
+echo '## Navigate to working directory ##'
+cd /home/dotnet/working/project
+
+if [[ "$FIX_COVERAGE_REPORT" = true ]]; then
+  echo '## Fixing coverage report ##'
+  sed -i -e 's|home/dotnet|home/dotnet/working/project|g' $REPORT_PATH
+fi
 
 echo '## Starting SonarCloud analysis ##'
 # check if PR or main build
@@ -15,29 +24,34 @@ if [[ -z "${SONAR_PR_KEY}" ]]; then
   dotnet sonarscanner begin \
   /k:${SONAR_PROJECT_KEY} \
   /o:${SONAR_ORGANIZAION_KEY} \
+  /d:sonar.verbose=true \
   /d:sonar.host.url=${SONAR_HOST_URL} \
   /d:sonar.login=${SONAR_TOKEN} \
-  /d:sonar.cs.exclusions=$EXCLUSIONS \
-  /d:sonar.cs.opencover.reportsPaths=$REPORT_PATH \
-  /d:sonar.exclusions=$EXCLUSIONS
+  /d:sonar.exclusions=$EXCLUSIONS \
+  /d:sonar.cs.opencover.reportsPaths=$REPORT_PATH  
 else
   dotnet sonarscanner begin \
   /k:${SONAR_PROJECT_KEY} \
   /o:${SONAR_ORGANIZAION_KEY} \
+  /d:sonar.verbose=true \
   /d:sonar.host.url=${SONAR_HOST_URL} \
   /d:sonar.login=${SONAR_TOKEN} \
+  /d:sonar.exclusions=$EXCLUSIONS \
   /d:sonar.pullrequest.base=${SONAR_PR_BASE} \
   /d:sonar.pullrequest.branch=${SONAR_PR_BRANCH} \
   /d:sonar.pullrequest.key=${SONAR_PR_KEY} \
   /d:sonar.pullrequest.provider=${SONAR_PR_PROVIDER} \
   /d:sonar.pullrequest.github.repository=${SONAR_PR_REPOSITORY} \
-  /d:sonar.cs.exclusions=$EXCLUSIONS \
-  /d:sonar.cs.opencover.reportsPaths=$REPORT_PATH \
-  /d:sonar.exclusions=$EXCLUSIONS
+  /d:sonar.cs.opencover.reportsPaths=$REPORT_PATH
 fi
 
 echo '## Build .Net Core solution ##'
-dotnet build /home/dotnet/working/project
+dotnet build
+
+if [[ "$RUN_TESTS" = true ]]; then
+  echo '## Running Tests ##'
+  dotnet test /p:CollectCoverage=true /p:CoverletOutputFormat=opencover /p:CoverletOutput='./test-output/'
+fi
 
 echo '## Complete SonarCloud analysis ##'
 dotnet sonarscanner end /d:sonar.login=${SONAR_TOKEN}

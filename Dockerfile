@@ -15,6 +15,8 @@ ARG PARENT_VERSION
 ENV SONAR_HOST_URL https://sonarcloud.io
 ENV SONAR_ORGANIZAION_KEY defra
 ENV SONAR_PR_PROVIDER=GitHub
+ENV FIX_COVERAGE_REPORT=true
+ENV RUN_TESTS=false
 
 LABEL uk.gov.defra.ffc.parent-image=defradigital/dotnetcore-development:${PARENT_VERSION}
 
