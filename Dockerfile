@@ -6,8 +6,8 @@ FROM defradigital/dotnetcore-development:${PARENT_VERSION} AS development
 USER root
 RUN apk --no-cache add openjdk11 --repository=http://dl-cdn.alpinelinux.org/alpine/edge/community
 USER dotnet
-RUN dotnet tool install --global dotnet-sonarscanner
-RUN dotnet tool install --global coverlet.console
+RUN dotnet tool install --global dotnet-sonarscanner && \
+    dotnet tool install --global coverlet.console
 ENV PATH="$PATH:/home/dotnet/.dotnet/tools"
 
 # Map args to env vars
