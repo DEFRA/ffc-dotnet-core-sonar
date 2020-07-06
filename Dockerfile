@@ -21,7 +21,7 @@ ENV RUN_TESTS false
 LABEL uk.gov.defra.ffc.parent-image=defradigital/dotnetcore-development:${PARENT_VERSION}
 
 COPY --chown=dotnet:dotnet ./scripts .
-RUN install -d -o dotnet -g dotnet /home/dotnet/project/
-RUN install -d -o dotnet -g dotnet /home/dotnet/working/
+RUN install -d -o dotnet -g dotnet /home/dotnet/project/ && \
+    install -d -o dotnet -g dotnet /home/dotnet/working/
 
 ENTRYPOINT [ "./run-analysis" ] 
