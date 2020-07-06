@@ -49,7 +49,7 @@ If it is safe for your service to run tests within the container as part of the 
 -e FIX_COVERAGE_REPORT=false
 ```
 
-**Note** in order to succesfully keep the relationship between an existing coverage report and the SonarScanner analysis results, the analysis process will remap file locations within this report.  If there is no existing coverage report or you wish to run your own tests this should be disabled by setting the `FIX_COVERAGE_REPORT` value to `false`.
+**Note** in order to successfully keep the relationship between an existing coverage report and the SonarScanner analysis results, the analysis process will remap file locations within this report.  If there is no existing coverage report or you wish to run your own tests this should be disabled by setting the `FIX_COVERAGE_REPORT` value to `false`.
 
 ### About the licence
 The Open Government Licence (OGL) was developed by the Controller of Her Majesty's Stationery Office (HMSO) to enable information providers in the public sector to license the use and re-use of their information under a common open licence.
