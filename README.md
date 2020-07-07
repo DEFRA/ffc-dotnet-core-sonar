@@ -1,4 +1,4 @@
-# .NET Core SonarClound Analysis
+# .NET Core SonarCloud Analysis
 Docker image for analysing .NET Core applications with SonarCloud.
 
 ## Overview
