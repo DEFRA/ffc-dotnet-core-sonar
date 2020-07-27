@@ -1,6 +1,6 @@
 #!/bin/sh
 echo '## Set variables ##'
-EXCLUSIONS="**/*.Tests/*,**/bin/*,**/obj/*,**/snyk_report.html,**/workspace_snyk_report.html"
+EXCLUSIONS="**/*.Tests/*,**/bin/*,**/obj/*,**/*snyk_report.html"
 REPORT_PATH="/home/dotnet/working/project/test-output/coverage.opencover.xml"
 SOURCE="/home/dotnet/working/project"
 
