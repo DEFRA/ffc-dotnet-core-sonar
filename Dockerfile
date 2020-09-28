@@ -1,4 +1,4 @@
-ARG PARENT_VERSION=1.0.1-dotnet3.1
+ARG PARENT_VERSION=1.2.0-dotnet3.1
 
 FROM defradigital/dotnetcore-development:${PARENT_VERSION} AS development
 
@@ -24,4 +24,4 @@ COPY --chown=dotnet:dotnet ./scripts .
 RUN install -d -o dotnet -g dotnet /home/dotnet/project/ && \
     install -d -o dotnet -g dotnet /home/dotnet/working/
 
-ENTRYPOINT [ "./run-analysis" ] 
+ENTRYPOINT [ "./run-analysis" ]
