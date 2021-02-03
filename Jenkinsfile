@@ -1,4 +1,4 @@
-@Library('defra-library@[psd-885-add-dockerhub-pipeline]') _
+@Library('defra-library@psd-885-add-dockerhub-pipeline') _
 
 // import uk.gov.defra.ImageMap
 
