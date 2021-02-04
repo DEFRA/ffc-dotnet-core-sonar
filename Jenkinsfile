@@ -1,3 +1,3 @@
-@Library('defra-library@psd-885-add-dockerhub-pipeline') _
+@Library('defra-library@v-9') _
 
 buildImage defaultBranch: 'master', tagSuffix: 'dotnet3.1'
