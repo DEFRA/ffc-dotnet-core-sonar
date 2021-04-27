@@ -1,4 +1,4 @@
-ARG PARENT_VERSION=1.2.0-dotnet3.1
+ARG PARENT_VERSION=1.2.6-dotnet3.1
 
 FROM defradigital/dotnetcore-development:${PARENT_VERSION} AS development
 
