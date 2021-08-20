@@ -51,6 +51,16 @@ If it is safe for your service to run tests within the container as part of the 
 
 **Note** in order to successfully keep the relationship between an existing coverage report and the SonarScanner analysis results, the analysis process will remap file locations within this report.  If there is no existing coverage report or you wish to run your own tests this should be disabled by setting the `FIX_COVERAGE_REPORT` value to `false`.
 
+### Organisation
+
+The image assumes the project exists in the Defra SonarCloud organisation.
+
+This can be changed by setting the `SONAR_ORGANIZATION_KEY` environment variable
+
+```
+-e SONAR_ORGANIZATION_KEY=mySonarCloudOrganisation
+```
+
 ### About the licence
 The Open Government Licence (OGL) was developed by the Controller of Her Majesty's Stationery Office (HMSO) to enable information providers in the public sector to license the use and re-use of their information under a common open licence.
 
