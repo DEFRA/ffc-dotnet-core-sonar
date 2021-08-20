@@ -13,7 +13,7 @@ ENV PATH="$PATH:/home/dotnet/.dotnet/tools"
 # Map args to env vars
 ARG PARENT_VERSION
 ENV SONAR_HOST_URL https://sonarcloud.io
-ENV SONAR_ORGANIZAION_KEY defra
+ENV SONAR_ORGANIZATION_KEY defra
 ENV SONAR_PR_PROVIDER GitHub
 ENV FIX_COVERAGE_REPORT true
 ENV RUN_TESTS false
