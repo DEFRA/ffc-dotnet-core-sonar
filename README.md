@@ -1,8 +1,8 @@
-# .NET Core SonarCloud Analysis
-Docker image for analysing .NET Core applications with SonarCloud.
+# .NET SonarCloud Analysis
+Docker image for analysing .NET applications with SonarCloud.
 
 ## Overview
-The analysis works by mounting a local .NET Core working directory as a Docker volume.  
+The analysis works by mounting a local .NET working directory as a Docker volume.  
 
 The image will build the solution attaching an instance of SonarScanner to MSBuild to allow analysis to complete.  
 
