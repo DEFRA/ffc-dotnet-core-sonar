@@ -40,7 +40,8 @@ else
   /d:sonar.pullrequest.key=${SONAR_PR_KEY} \
   /d:sonar.pullrequest.provider=${SONAR_PR_PROVIDER} \
   /d:sonar.pullrequest.github.repository=${SONAR_PR_REPOSITORY} \
-  /d:sonar.cs.opencover.reportsPaths=$REPORT_PATH
+  /d:sonar.cs.opencover.reportsPaths=$REPORT_PATH \
+  /d:sonar.verbose=true
 fi
 
 echo '## Build .Net Core solution ##'
