@@ -5,6 +5,10 @@ FROM defradigital/dotnetcore-development:${PARENT_VERSION} AS development
 # Install Sonar Scanner, Coverlet and Java (required for Sonar Scanner)
 USER root
 RUN apk --no-cache add openjdk17 --repository=http://dl-cdn.alpinelinux.org/alpine/edge/community
+
+# Install Node.js (needed for scanning JavaScript)
+RUN apk --no-cache add nodejs npm
+
 USER dotnet
 RUN dotnet tool install --global dotnet-sonarscanner --version 6.0.0 && \
     dotnet tool install --global coverlet.console --version 6.0.0
