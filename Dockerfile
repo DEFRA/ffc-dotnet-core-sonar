@@ -10,8 +10,8 @@ RUN apk --no-cache add openjdk17 --repository=http://dl-cdn.alpinelinux.org/alpi
 RUN apk --no-cache add nodejs npm
 
 USER dotnet
-RUN dotnet tool install --global dotnet-sonarscanner --version 8.0.0 && \
-    dotnet tool install --global coverlet.console --version 8.0.0
+RUN dotnet tool install --global dotnet-sonarscanner --version 6.2.0 && \
+    dotnet tool install --global coverlet.console --version 6.0.2
 ENV PATH="$PATH:/home/dotnet/.dotnet/tools"
 
 # Map args to env vars
